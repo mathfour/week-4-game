@@ -2,29 +2,26 @@
 
 ## Instructions
 
-### Overview
+~~### Overview
 In this assignment, you'll create another fun and interactive game for web browsers. This time, your app must dynamically update your HTML pages with the jQuery library.
 
-### Remember
-
+~~### Remember
 You will be fully capable of doing this homework by the end of Saturday's class.
 
-### Before You Begin
+~~### Before You Begin
 
-1. Create a new GitHub repo called `week-4-game`, then clone it to your computer.
+~~1. Create a new GitHub repo called `week-4-game`, then clone it to your computer.
 
-2. Inside the `week-4-game` folder, create the following: `index.html`, `composer.json` and `index.php`.
+~~2. Inside the `week-4-game` folder, create the following: `index.html`, `composer.json` and `index.php`.~~
   * Place the appropriate content in the `composer.json` and `index.php` files, so you can deploy your game to Heroku.
-
-3. Still inside the `week-4-game` directory, make a folder called `assets`.
+  *Are we doing this in Heroku?*
+~~3. Still inside the `week-4-game` directory, make a folder called `assets`.
     * Inside the `assets` directory, make three additional folders: `javascript`, `css` and `images`.
       * In the `javascript` folder, make a file called `game.js`.
       * In the `css` folder, make a file called `style.css`.
       * In the `css` folder, make a file called `reset.css`. Paste into it the code found from the Meyerweb Reset.
       * In the images folder, save any of the images you plan on using.
-
 4. Push the above changes to GitHub. 
-
 5. Choose whichever game you want to make from the choices below. The CrystalsCollector game is the recommended option, but if you are looking for an extra hard challenge then take a stab at the Star Wars exercise. (Note: Only choose the Star Wars Exercise if you are feeling very comfortable with the material covered in class. The Crystal Collector activity is plenty challenging enough!).
 
 ### Option One: CrystalsCollector Game (Recommended)
@@ -41,6 +38,9 @@ You will be fully capable of doing this homework by the end of Saturday's class.
 
 	* When the player clicks on a crystal, it will add a specific amount of points to the player's total score. 
 		* Your game will hide this amount until the player clicks a crystal.
+		```javascript
+		Math.floor((Math.random()*1000)%12)+1
+		```
 		* When they do click one, update the player's score counter.
 
 	* The player wins if their total score matches the random number from the beginning of the game.
