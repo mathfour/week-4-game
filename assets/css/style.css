@@ -1,0 +1,10 @@
+body {
+  background-image:    url("../images/texas_flag__large_by_dallasx_15.jpg");
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;              /* optional, center the image */
+}
+
+h1 {
+  text-align: center;
+}

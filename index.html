@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <title>Homework 4 Bon Crowder</title>
     <!-- <link rel="stylesheet" href="reset.css"> -->
-    <!-- <link rel="stylesheet" href="starter.css"> -->
+
     <script src="https://use.fontawesome.com/d2644d9941.js"></script>
     <!-- jQuery library -->
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <!-- Latest compiled and minified CSS for bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
 
@@ -18,6 +19,7 @@
     <div class="row">
         <div class="col-xs-12">
           <h1>Are you ready to run across Texas?</h1>
+          <h2>Your team has <span id="winCount">0</span> wins and <span id="lossCount">0</span> losses.</h2>
 
           <p>You have four runners, shown below. By clicking on a runner, you will “run” a specific amount of miles of your race.</p>
 
@@ -29,9 +31,9 @@
 
           <p>When you run a new race, each of your runners will have a different number of miles they can run.</p>
 
-          <h1>Your team has <span id="winCount">0</span> wins and <span id="lossCount">0</span> losses.</h1>
+          <h2><span id="milesInRaceWords"></span> <span id="milesToRunWords"></span></h2>
 
-          <h1>Click on a team member to start running!</h1>
+          <h3 id="clickToRun"></h3>
           </div>
     </div>
 
@@ -40,35 +42,23 @@
             <div class="col-xs-6 col-sm-3">
               <button id="silvia" class="btn btn-primary runner" value="Silvia"><img src="assets/images/MGRR-Silvia.jpg"></button>
               <br>
-              <!-- Total Legs of the Race: <span id="silviaLegs"></span> -->
             </div>
             <div class="col-xs-6 col-sm-3">
               <button id="rocio" class="btn btn-danger runner" value="Rocio"><img src="assets/images/MGRR-Rocio.jpg"></button>
               <br>
-              <!-- Total Legs of the Race: <span id="rocioLegs"></span> -->
             </div>
             <div class="col-xs-6 col-sm-3">
               <button id="lauro" class="btn btn-default runner" value="Lauro"><img src="assets/images/MGRR-Lauro.jpg"></button>
               <br>
-              <!-- Total Legs of the Race: <span id="lauroLegs"></span> -->
             </div>
             <div class="col-xs-6 col-sm-3">
               <button id="randy" class="btn btn-primary runner" value="Randy"><img src="assets/images/MGRR-Randy.jpg"></button>
               <br>
-              <!-- Total Legs of the Race: <span id="randyLegs"></span> -->
             </div>
         </div>
     </div>
 
-    <div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-          <h2>The race is <span id="milesInRaceWords">0</span> miles long.</h2>
-          <h2> Your team has <span id="milesToRunWords"></span> more miles to run!</h2>
-          </div>
-        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5"></div>
-    </div>
-</div>
+
 
 <script>
   $(document).ready(function(){
@@ -134,18 +124,39 @@
       winARace: function() {
         this.racesFinished += 1;
         $("#winCount").html(this.racesFinished);
+        var audioWin = new Audio('assets/images/SMALL_CROWD_APPLAUSE-Yannick_Lemieux-1268806408.mp3');
+        audioWin.play();
       },
       loseARace: function(){
         this.racesUnFinished +=1;
         $("#lossCount").html(this.racesUnFinished);
+        var audioLose = new Audio('assets/images/336998__corsica-s__awww-01.wav');
+        audioLose.play();
       }
     }
       // announcing the next race (only after the first is finished)
       var almostTimeForRace = function() {
-        $("#milesToRunWords").html("<h2>It's about time for the next race...</h2>");
+        $("#milesToRunWords").html("It's about time for the next relay race...");
+        $("#clickToRun").html("");
+        $("#milesInRaceWords").html("");
       }
+      // the countdown timers
+      var countDownThree = function(){
+        $("#milesToRunWords").html("<h1>In 3 ...</h1>");
+      }
+
+      var countDownTwo = function(){
+        $("#milesToRunWords").html("<h1>In 2 ...</h1>");
+      }
+
+      var countDownOne = function(){
+        $("#milesToRunWords").html("<h1>In 1 ...</h1>");
+      }
+
       // starting the race and initializing the variables
       var startTheRace = function() {
+        var audioCannon = new Audio('assets/images/Cannon-SoundBible.com-1661203605.mp3');
+        audioCannon.play();
         // miles in the race
         milesToRun = Math.floor((Math.random()*100))+20;
 
@@ -161,14 +172,24 @@
         objectLauro.showInfo();
         objectRandy.showInfo();
 
-        // the words for the miles to run and the miles left
-        $("#milesInRaceWords").html(milesToRun);
+        $("#clickToRun").html("Click on a team member to start running!");
 
-        $("#milesToRunWords").html(milesToRun);
+        // the words for the miles to run and the miles left
+        $("#milesInRaceWords").html("The relay is " + milesToRun + " miles long.");
+
+        $("#milesToRunWords").html("Your team has "+ milesToRun + " more miles to run!");
       };
 
+      function startTheRelay() {
+        setTimeout(almostTimeForRace, 6000);
+        setTimeout(countDownThree, 12000);
+        setTimeout(countDownTwo, 13000);
+        setTimeout(countDownOne, 14000);
+        setTimeout(startTheRace, 15000);
+        clearTimeout();
+      }
       // start the race!
-      startTheRace();
+      startTheRelay();
 
       // runner buttons and their handling
       $("button.runner").click(function() {
@@ -182,31 +203,29 @@
             if (milesToRun === 0) {
 
               // announce the win
-              $("#milesToRunWords").html("<h2>" + objectSilvia.name + " crossed the finish line for your team!</h2>");
+              $("#milesToRunWords").html(objectSilvia.name + " crossed the finish line for your team!");
 
               // flip counter for the wins column
               objectMgrr.winARace();
 
               // start the race over, but only after giving the warnings
-              setTimeout(almostTimeForRace, 3000);
-              setTimeout(startTheRace, 6000);
+              startTheRelay();
             }
             // if we ran too far,
             else if (milesToRun < 0) {
 
               // Show the miles we went over
-              $("#milesToRunWords").html("<h2>Your team ran " + - milesToRun + " too many miles. " + objectSilvia.name + " must have gotten lost!</h2>");
+              $("#milesToRunWords").html("Your team ran " + - milesToRun + " too many miles. " + objectSilvia.name + " must have gotten lost!");
 
               // flip counter for the losses column
               objectMgrr.loseARace();
 
               // start the race over, but only after giving the warnings
-              setTimeout(almostTimeForRace, 3000);
-              setTimeout(startTheRace, 6000);
+              startTheRelay();
             }
             // continuing if we haven't won or lost
             else {
-              $("#milesToRunWords").html("<h2>Your team has " + milesToRun + " more miles to run!</h2>");
+              $("#milesToRunWords").html("Your team has "+ milesToRun + " more miles to run!");
             }
         }
         // what to do if the player clicked on Rocio
@@ -218,31 +237,29 @@
           if (milesToRun === 0) {
 
             // announce the win
-            $("#milesToRunWords").html("<h2>" + objectRocio.name + " crossed the finish line for your team!</h2>");
+            $("#milesToRunWords").html(objectRocio.name + " crossed the finish line for your team!");
 
             // flip counter for the wins column
             objectMgrr.winARace();
 
             // start the race over, but only after giving the warnings
-            setTimeout(almostTimeForRace, 3000);
-            setTimeout(startTheRace, 6000);
+            startTheRelay();
           }
           // if we ran too far,
           else if (milesToRun < 0) {
 
             // Show the miles we went over
-            $("#milesToRunWords").html("<h2>Your team ran " + - milesToRun + " too many miles. " + objectRocio.name + " must have gotten lost!</h2>");
+            $("#milesToRunWords").html("Your team ran " + - milesToRun + " too many miles. " + objectRocio.name + " must have gotten lost!");
 
             // flip counter for the losses column
             objectMgrr.loseARace();
 
             // start the race over, but only after giving the warnings
-            setTimeout(almostTimeForRace, 3000);
-            setTimeout(startTheRace, 6000);
+            startTheRelay();
           }
           // continuing if we haven't won or lost
           else {
-            $("#milesToRunWords").html("<h2>Your team has " + milesToRun + " more miles to run!</h2>");
+            $("#milesToRunWords").html("Your team has "+ milesToRun + " more miles to run!");
           }
         }
         // what to do if the player clicked on Lauro
@@ -254,31 +271,29 @@
           if (milesToRun === 0) {
 
             // announce the win
-            $("#milesToRunWords").html("<h2>" + objectLauro.name + " crossed the finish line for your team!</h2>");
+            $("#milesToRunWords").html(objectLauro.name + " crossed the finish line for your team!");
 
             // flip counter for the wins column
             objectMgrr.winARace();
 
             // start the race over, but only after giving the warnings
-            setTimeout(almostTimeForRace, 3000);
-            setTimeout(startTheRace, 6000);
+            startTheRelay();
           }
           // if we ran too far,
           else if (milesToRun < 0) {
 
             // Show the miles we went over
-            $("#milesToRunWords").html("<h2>Your team ran " + - milesToRun + " too many miles. " + objectLauro.name + " must have gotten lost!</h2>");
+            $("#milesToRunWords").html("Your team ran " + - milesToRun + " too many miles. " + objectLauro.name + " must have gotten lost!");
 
             // flip counter for the losses column
             objectMgrr.loseARace();
 
             // start the race over, but only after giving the warnings
-            setTimeout(almostTimeForRace, 3000);
-            setTimeout(startTheRace, 6000);
+            startTheRelay();
           }
           // continuing if we haven't won or lost
           else {
-            $("#milesToRunWords").html("<h2>Your team has " + milesToRun + " more miles to run!</h2>");
+            $("#milesToRunWords").html("Your team has "+ milesToRun + " more miles to run!");
           }
 
         }
@@ -291,31 +306,29 @@
           if (milesToRun === 0) {
 
             // announce the win
-            $("#milesToRunWords").html("<h2>" + objectRandy.name + " crossed the finish line for your team!</h2>");
+            $("#milesToRunWords").html(objectRandy.name + " crossed the finish line for your team!");
 
             // flip counter for the wins column
             objectMgrr.winARace();
 
             // start the race over, but only after giving the warnings
-            setTimeout(almostTimeForRace, 3000);
-            setTimeout(startTheRace, 6000);
+            startTheRelay();
           }
           // if we ran too far,
           else if (milesToRun < 0) {
 
             // Show the miles we went over
-            $("#milesToRunWords").html("<h2>Your team ran " + - milesToRun + " too many miles. " + objectRandy.name + " must have gotten lost!</h2>");
+            $("#milesToRunWords").html("Your team ran " + - milesToRun + " too many miles. " + objectRandy.name + " must have gotten lost!");
 
             // flip counter for the losses column
             objectMgrr.loseARace();
 
             // start the race over, but only after giving the warnings
-            setTimeout(almostTimeForRace, 3000);
-            setTimeout(startTheRace, 6000);
+            startTheRelay();
           }
           // continuing if we haven't won or lost
           else {
-            $("#milesToRunWords").html("<h2>Your team has " + milesToRun + " more miles to run!</h2>");
+            $("#milesToRunWords").html("Your team has "+ milesToRun + " more miles to run!");
           }
         }
       });
