@@ -3,32 +3,158 @@
   <head>
     <meta charset="utf-8">
     <title>Homework 4 Bon Crowder</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="starter.css">
+    <!-- <link rel="stylesheet" href="reset.css"> -->
+    <!-- <link rel="stylesheet" href="starter.css"> -->
     <script src="https://use.fontawesome.com/d2644d9941.js"></script>
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <!-- Latest compiled and minified CSS for bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   </head>
   <body>
-    <!-- Calculator Panel -->
+    <!-- Button Panel -->
+
     <div class="container">
         <div class="row">
             <div class="col-xs-3">
-              <button id="button-1" class="btn btn-primary runner" value="1"><h1>Silvia</h1></button>
+              <button id="silvia" class="btn btn-primary runner" value="Silvia"><h1>Silvia</h1></button>
+              Total Legs of the Race: <span id="silviaLegs"></span>
             </div>
             <div class="col-xs-3">
-              <button id="button-2" class="btn btn-primary runner" value="2"><h1>Rocio</h1></button>
+              <button id="rocio" class="btn btn-primary runner" value="Rocio"><h1>Rocio</h1></button>
             </div>
             <div class="col-xs-3">
-              <button id="button-3" class="btn btn-primary runner" value="3"><h1>Lauro</h1></button>
+              <button id="lauro" class="btn btn-primary runner" value="Lauro"><h1>Lauro</h1></button>
             </div>
             <div class="col-xs-3">
-              <button id="button-4" class="btn btn-primary number" value="4"><h1>Randy</h1></button>
+              <button id="randy" class="btn btn-primary runner" value="Randy"><h1>Randy</h1></button>
             </div>
         </div>
     </div>
 
+    <div class="container">
+    <div class="row">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5"></div>
+        <div class="col-xs-8 col-sm-6 col-md-4 col-lg-2">
+          <br>
+          <button id="startTheRace" class="btn btn-danger">Press to Start the Race!</button>
+          <p id="milesToRunWords"></p>
+          </div>
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5"></div>
+    </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    // the instructions require a random number "between 19 - 120"
+    // the variable milesToRun gives a number x, such that 20 <= x <= 119,
+    // which is equivalent to a number x such that 19 < x < 120.
+    var milesToRun = Math.floor((Math.random()*100))+20;
+
+    // using modulo 12 yeilds a number from 0 to 11, so I'm using
+    // +1 to get it from 1 to 12
+    // var valueSilvia = Math.floor((Math.random()*100)%12)+1;
+      // console.log("Silvia's value is " + valueSilvia);
+    var valueRocio = Math.floor((Math.random()*100)%12)+1;
+      console.log("Rocio's value is " + valueRocio);
+    var valueLauro = Math.floor((Math.random()*100)%12)+1;
+      console.log("Lauro's value is " + valueLauro);
+    var valueRandy = Math.floor((Math.random()*100)%12)+1;
+      console.log("Randy's value is " + valueRandy);
+
+    var silviasLegsThatSheRan = 0;
+
+// need some objects that have all the juicy stuff I need
+
+  var objectSilvia = {
+    objDescriptor: "Silvia's info ... ",
+    legsRan: 0,
+    distance: Math.floor((Math.random()*100)%12)+1,
+    showInfo: function() {
+      console.log(this.objDescriptor + this.distance);
+    }
+  };
+
+  var objectRocio = {
+    objDescriptor: "Rocio's info ... ",
+    legsRan: 0,
+    distance: Math.floor((Math.random()*100)%12)+1,
+    showInfo: function() {
+      console.log(this.objDescriptor + this.distance);
+    }
+  };
+
+  var objectLauro = {
+    objDescriptor: "Lauro's info ... ",
+    legsRan: 0,
+    distance: Math.floor((Math.random()*100)%12)+1,
+    showInfo: function() {
+      console.log(this.objDescriptor + this.distance);
+    }
+  };
+
+  var objectRandy = {
+    objDescriptor: "Randy's info ... ",
+    legsRan: 0,
+    distance: Math.floor((Math.random()*100)%12)+1,
+    showInfo: function() {
+      console.log(this.objDescriptor + this.distance);
+    }
+  };
+
+  objectSilvia.showInfo();
+  objectRocio.showInfo();
+  objectLauro.showInfo();
+  objectRandy.showInfo();
+
+  // now valueSilvia is objectSilvia.distance
+
+
+
+
+    // this onclick starts the race by showing the number of miles in the race
+    $("button#startTheRace").click(function(){
+      $("#milesToRunWords").html("<h2>Your team needs to run " + milesToRun + " miles to complete the race.</h2>");
+    });
+
+    // this onclick
+    $("button.runner").click(function() {
+      console.log("you clicked " + this.value);
+      if (this.value === "Silvia") {
+        milesToRun -= objectSilvia.distance;
+        console.log(this.value + "'s value is " + objectSilvia.distance);
+        objectSilvia.legsRan += 1;
+        $("span#silviaLegs").html(objectSilvia.legsRan);
+      }
+      else if (this.value === "Rocio") {
+        milesToRun -= objectRocio.distance;
+        console.log(this.value + "'s value is " + objectRocio.distance);
+        objectRocio.legsRan += 1;
+        $("span#rocioLegs").html(objectRocio.legsRan);
+      }
+      else if (this.value === "Lauro") {
+        milesToRun -= objectLauro.distance;
+        console.log(this.value + "'s value is " + objectLauro.distance);
+        objectLauro.legsRan += 1;
+        $("span#lauroLegs").html(objectLauro.legsRan);
+      }
+      else {
+        milesToRun -= objectRandy.distance;
+        console.log(this.value + "'s value is " + objectRandy.distance);
+        objectRandy.legsRan += 1;
+        $("span#randyLegs").html(objectRandy.legsRan);
+      }
+
+
+      // console.log("You had " + milesToRun + " miles to run");
+      // milesToRun -= valueOne;
+      console.log("After " + this.value + " runs, you have " + milesToRun + " miles to run");
+    });
+
+
+  });
+</script>
 
 
   </body>
